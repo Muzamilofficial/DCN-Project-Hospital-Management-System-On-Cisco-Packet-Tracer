@@ -1,0 +1,78 @@
+vlan 80
+vlan 90
+vlan 100
+vlan 110
+vlan 120
+vlan 130
+
+int range gig1/0/2-7
+switchport mode trunk
+exit
+
+
+ip routing
+router ospf 10
+network 192.168.101.128 0.0.0.31 area 0
+network 192.168.101.160 0.0.0.31 area 0
+network 192.168.101.192 0.0.0.31 area 0
+network 192.168.101.224 0.0.0.31 area 0
+network 192.168.102.0 0.0.0.31 area 0
+network 192.168.102.32 0.0.0.31 area 0
+network 192.168.102.96 0.0.0.3 area 0
+
+exit
+
+ip route 0.0.0.0 0.0.0.0 192.168.102.98
+
+
+
+
+router ospf 10
+network 192.168.102.92 0.0.0.31 area 0
+network 192.168.102.96 0.0.0.31 area 0
+network 192.168.102.88 0.0.0.15 area 0
+network 192.168.102.64 0.0.0.15 area 0
+network 192.136.17.8 0.0.0.3 area 0
+network 192.136.17.12 0.0.0.3 area 0
+
+exit
+
+ip route 0.0.0.0 0.0.0.0 192.136.17.14
+ip route 0.0.0.0 0.0.0.0 192.136.17.10 70
+do wr
+
+
+
+
+router ospf 10
+network 192.136.17.4 0.0.0.3 area 0
+network 192.136.17.12 0.0.0.3 area 0
+
+exit
+do wr
+
+
+
+int vlan 80
+ip address 192.168.101.129 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 90
+ip address 192.168.101.161 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 100
+ip address 192.168.101.193 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 110
+ip address 192.168.101.255 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 120
+ip address 192.168.120.1 255.255.255.192
+ip helper-address 192.168.102.67
+
+int vlan 130
+ip address 192.168.120.33 255.255.255.192
+ip helper-address 192.168.102.67
